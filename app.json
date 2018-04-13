@@ -1,9 +1,9 @@
 {
-  "name": "Start on Heroku: Python",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "name": "Quantum TSP Solver",
+  "description": "A python app for solving TSP problem with quantum computing",
   "image": "heroku/python",
-  "repository": "https://github.com/heroku/python-getting-started",
-  "keywords": ["python", "django" ],
+  "repository": "https://github.com/BOHRTECHNOLOGY/quantum_tsp_web_app",
+  "keywords": ["python", "django", "quantum computing"],
   "addons": [ "heroku-postgresql" ],
   "env": {
     "SECRET_KEY": {
