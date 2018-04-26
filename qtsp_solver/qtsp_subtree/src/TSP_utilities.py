@@ -2,8 +2,10 @@ import numpy as np
 import itertools
 # This funny way of using matplotlib is due to my problems with _tkinter
 # https://stackoverflow.com/a/4935945/3021669
-import matplotlib as mpl
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use('Agg')
+
 
 def create_nodes_array(N, seed=None):
     if seed:
