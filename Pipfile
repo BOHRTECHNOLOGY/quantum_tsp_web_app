@@ -11,7 +11,7 @@ scikit-learn = "*"
 quantum-grove = "*"
 pyquil = "*"
 requests = "*"
-matplotlib = "1.1.0"
+matplotlib = "2.1.2"
 
 [requires]
 python_version = "3.6"
