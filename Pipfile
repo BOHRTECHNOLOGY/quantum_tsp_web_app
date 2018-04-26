@@ -11,6 +11,8 @@ scikit-learn = "*"
 quantum-grove = "*"
 pyquil = "*"
 requests = "*"
+rq = "*"
+redis = "*"
 
 [requires]
 python_version = "3.6"
