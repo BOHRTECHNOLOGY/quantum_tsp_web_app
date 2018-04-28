@@ -3,7 +3,6 @@ from django.http import HttpResponse
 
 from .qtsp_subtree.src.forest_tsp_solver import ForestTSPSolver
 import numpy as np
-from .models import Greeting
 
 import requests
 

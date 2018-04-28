@@ -27,6 +27,6 @@ def schedule_job(request):
 
 
 def solve_tsp(nodes, first_node):
-    forest_solver = ForestTSPSolver(np.array(nodes))
+    forest_solver = ForestTSPSolver(np.array(nodes), steps=1, ftol=1e-2, xtol=1e-2)
     forest_solution = forest_solver.solve_tsp()
     return forest_solution
