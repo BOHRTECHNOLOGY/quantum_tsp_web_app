@@ -9,13 +9,10 @@ admin.autodiscover()
 import qtsp_solver.views
 import qtsp_solver.controller
 
-# Examples:
-# url(r'^$', 'app_settings.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
     url(r'^$', qtsp_solver.views.index, name='index'),
-    url(r'^db', qtsp_solver.views.db, name='db'),
+    url(r'^schedule_job', csrf_exempt(qtsp_solver.controller.schedule_job)),
     url(r'^get_result', csrf_exempt(qtsp_solver.controller.schedule_job)),
     path('admin/', admin.site.urls),
 ]
