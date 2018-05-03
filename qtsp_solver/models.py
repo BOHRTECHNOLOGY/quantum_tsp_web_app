@@ -15,3 +15,5 @@ class TSPLog(models.Model):
     first_node = models.IntegerField(null=True)
     processing_time = models.IntegerField(null=True)
     solution = ArrayField(models.IntegerField(null=True), null=True)
+    steps = models.IntegerField(null=True)
+    tol = models.IntegerField(null=True)

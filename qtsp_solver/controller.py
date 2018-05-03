@@ -21,18 +21,24 @@ def schedule_job(request):
     sys.stdout.flush()
     nodes = request_dict["nodes"]
     first_node = request_dict["first_node"]
-    current_log = TSPLog.objects.create(nodes=nodes, first_node=first_node)
+    tol = 1e-2
+    steps = 1
+    if "tol" in request_dict.keys():
+        tol = request_dict["tol"]
+    if "steps" in request_dict.keys():
+        steps = request_dict["steps"]
+    current_log = TSPLog.objects.create(nodes=nodes, first_node=first_node, tol=tol, steps=steps)
     current_log.save()
     q = Queue(connection=conn)
     result = q.enqueue(
-        solve_tsp, nodes, first_node, current_log)
+        solve_tsp, nodes, first_node, steps, tol, current_log)
 
     return JsonResponse({"status_code": 200, "id": current_log.id})
 
 
-def solve_tsp(nodes, first_node, current_log):
+def solve_tsp(nodes, first_node, steps, tol, current_log):
     start_time = time.time()
-    forest_solver = ForestTSPSolver(np.array(nodes), steps=1, ftol=1e-2, xtol=1e-2)
+    forest_solver = ForestTSPSolver(np.array(nodes), steps=steps, ftol=tol, xtol=tol)
     forest_solution = forest_solver.solve_tsp()
     end_time = time.time()
     processing_time = int(end_time - start_time)
