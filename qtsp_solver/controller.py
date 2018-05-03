@@ -6,6 +6,7 @@ from qtsp_solver.models import TSPLog
 import sys
 import json
 import numpy as np
+import time
 
 def schedule_job(request):
     """

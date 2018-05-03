@@ -11,5 +11,9 @@ conn = redis.from_url(redis_url)
 
 if __name__ == '__main__':
     with Connection(conn):
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app_settings.settings_production")
+        import django
+        django.setup()
+
         worker = Worker(map(Queue, listen))
         worker.work()

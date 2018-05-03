@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'app_settings.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tsp_logs',
-        'HOST': os.environ.get('DATABASE_URL', ''),
-        'PORT': '5432'
+        'NAME': 'qtsp_solver',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
