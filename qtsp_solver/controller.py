@@ -31,7 +31,7 @@ def schedule_job(request):
     current_log.save()
     q = Queue(connection=conn)
     result = q.enqueue(
-        solve_tsp, nodes, first_node, steps, tol, current_log)
+        solve_tsp, nodes, first_node, steps, tol, current_log, timeout=3600)
 
     return JsonResponse({"status_code": 200, "id": current_log.id})
 
