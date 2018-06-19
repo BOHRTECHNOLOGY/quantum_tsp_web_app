@@ -8,7 +8,7 @@ from pyquil.gates import X
 import itertools
 
 import scipy.optimize
-import TSP_utilities
+from . import TSP_utilities
 import pdb
 
 class ForestTSPSolver(object):
