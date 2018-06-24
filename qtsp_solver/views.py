@@ -8,10 +8,10 @@ import numpy as np
 def index(request):
     nodes_array = np.array([[0, 0], [1, 1]])
     tsp_solver = ForestTSPSolver(nodes_array, steps=1, ftol=1e-2, xtol=1e-2)
-    tsp_solver.solve_tsp()
-    results = tsp_solver.get_solution()
+    results, distribution = tsp_solver.solve_tsp()
     line_1 = "Nodes coordinates" + str(nodes_array)
     line_2 = "Results:" + str(results)
+    line_3 = "Distribution:" + str(distribution)
     print("FINISHED!")
     print("RESULTS:", results)
-    return HttpResponse('<pre>' + line_1 + "\n" + line_2 + '</pre>')
+    return HttpResponse('<pre>' + line_1 + "\n" + line_2 + "\n" + line_3 + '</pre>')

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import JSONField
 
 # Create your models here.
 class TSPLog(models.Model):
@@ -17,3 +18,4 @@ class TSPLog(models.Model):
     solution = ArrayField(models.IntegerField(null=True), null=True)
     steps = models.IntegerField(null=True)
     tol = models.IntegerField(null=True)
+    distribution = JSONField(null=True)
