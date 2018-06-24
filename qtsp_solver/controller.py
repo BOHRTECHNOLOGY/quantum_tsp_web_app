@@ -40,11 +40,16 @@ def solve_tsp(nodes, first_node, steps, tol, current_log):
     start_time = time.time()
     forest_solver = ForestTSPSolver(np.array(nodes), steps=steps, ftol=tol, xtol=tol)
     forest_solution, forest_distribution = forest_solver.solve_tsp()
+    distribution = {}
+    for order_tuple, count in forest_distribution.items():
+        new_key = " ".join(map(str,order_tuple))
+        distribution[new_key] = count
+
     end_time = time.time()
     processing_time = int(end_time - start_time)
     current_log.processing_time = processing_time
     current_log.solution = forest_solution
-    current_log.distribution = json.dumps(forest_distribution)
+    current_log.distribution = json.dumps(distribution)
     current_log.save()
 
 
