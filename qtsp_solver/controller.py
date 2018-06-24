@@ -59,6 +59,7 @@ def get_result(request):
     result_log = TSPLog.objects.filter(id=result_id)[0]
     solution = result_log.solution
     processing_time = result_log.processing_time
-    return JsonResponse({"solution":solution, "processing_time":processing_time})
+    distribution = result_log.distribution
+    return JsonResponse({"solution":solution, "processing_time":processing_time, "distribution":distribution})
 
 
