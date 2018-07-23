@@ -13,6 +13,13 @@ class TSPLog(models.Model):
         ),
         null=True
     )
+    distance_matrix = ArrayField(
+        ArrayField(
+            models.FloatField(null=True),
+            null=True
+        ),
+        null=True
+    )
     first_node = models.IntegerField(null=True)
     processing_time = models.IntegerField(null=True)
     solution = ArrayField(models.IntegerField(null=True), null=True)

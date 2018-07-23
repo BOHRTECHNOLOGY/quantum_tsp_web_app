@@ -2,13 +2,14 @@ from django.http import JsonResponse
 from rq import Queue
 from worker import conn
 from qtsp_solver.qtsp_subtree.src.forest_tsp_solver import ForestTSPSolver
+from qtsp_solver.qtsp_subtree.src.TSP_utilities import get_tsp_matrix
 from qtsp_solver.models import TSPLog
 import sys
 import json
 import numpy as np
 import time
 
-def schedule_job(request):
+def schedule_job_with_nodes(request):
     """
     :param request: HTTP request with following fields:
     - nodes: dictionary where keys correspond to node ids and values to coordinates.
@@ -21,6 +22,7 @@ def schedule_job(request):
     sys.stdout.flush()
     nodes = request_dict["nodes"]
     first_node = request_dict["first_node"]
+    distance_matrix = get_tsp_matrix(np.array(nodes))
     tol = 1e-2
     steps = 1
     if "tol" in request_dict.keys():
@@ -31,14 +33,43 @@ def schedule_job(request):
     current_log.save()
     q = Queue(connection=conn)
     result = q.enqueue(
-        solve_tsp, nodes, first_node, steps, tol, current_log, timeout=3600)
+        solve_tsp, distance_matrix, first_node, steps, tol, current_log, timeout=3600)
+
+    return JsonResponse({"status_code": 200, "id": current_log.id})
+
+def schedule_job_with_distance_matrix(request):
+    """
+    :param request: HTTP request with following fields:
+    - distance_matrix: dictionary where keys correspond to node ids and values to coordinates.
+    - first_node: integer - id of the first node
+    :return:
+    """
+
+    request_dict = json.loads(request.read())
+    print(request_dict)
+    sys.stdout.flush()
+    distance_matrix = request_dict["distance_matrix"]
+    first_node = request_dict["first_node"]
+    tol = 1e-2
+    steps = 1
+    if "tol" in request_dict.keys():
+        tol = request_dict["tol"]
+    if "steps" in request_dict.keys():
+        steps = request_dict["steps"]
+    current_log = TSPLog.objects.create(nodes=None, distance_matrix=distance_matrix, first_node=first_node, tol=tol, steps=steps)
+    current_log.save()
+    q = Queue(connection=conn)
+    result = q.enqueue(
+        solve_tsp, distance_matrix, first_node, steps, tol, current_log, timeout=3600)
 
     return JsonResponse({"status_code": 200, "id": current_log.id})
 
 
-def solve_tsp(nodes, first_node, steps, tol, current_log):
+
+def solve_tsp(distance_matrix, first_node, steps, tol, current_log):
     start_time = time.time()
-    forest_solver = ForestTSPSolver(np.array(nodes), steps=steps, ftol=tol, xtol=tol)
+
+    forest_solver = ForestTSPSolver(np.array(distance_matrix), steps=steps, ftol=tol, xtol=tol)
     forest_solution, forest_distribution = forest_solver.solve_tsp()
     distribution = {}
     for order_tuple, count in forest_distribution.items():
