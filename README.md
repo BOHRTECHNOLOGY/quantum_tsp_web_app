@@ -1,5 +1,6 @@
-# quantum_tsp_web_app
+# Quantum TSP solver web app
 
-This is a webapplication for solving Travelling Salesman Problem with Quantum Computation.
+This is backend for web application solving Travelling Salesman Problem with Quantum Computation.
+
 It uses https://github.com/BOHRTECHNOLOGY/quantum_tsp as a computational engine.
 
